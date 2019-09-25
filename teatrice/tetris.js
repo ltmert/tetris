@@ -4,6 +4,9 @@ var score;
 var harizontal_max;
 var vertical_max;
 var level;
+var shapes = new Array();
+var currentShape;
+var colors = ['black', 'yellow', 'red', 'cyan'];
 //var tile_size;
 
 const tile_size = 20; //680 height, 400 width, each tile 20 px, we will have 20 boxes per row, and will have 34 rows 
@@ -12,6 +15,7 @@ const rows = 34;
 
 
 function init() {
+    score=0;
     canvas = document.getElementById('Canvas');
     context = canvas.getContext('2d');
        console.log("Im initiliazied");
@@ -25,15 +29,26 @@ function whereamI() { // where is the first shape, did it touch the floor, or in
 }
 
 function game() {
-    Console.log("current piece")
+    console.log("current piece")
 
 }
 
 function buildshapes() { // design shapes here, 4,5, random?
+    
+    var other = [[1, 0], [0,1], [1,1],[2,1]]; // 
+    var line = [[0, 0], [0, 1], [0, 2], [0, 3]]; // line
+    var square = [[0, 0], [0, 1], [1, 0], [1, 1]];
+    var l = [[2,0], [0, 1], [1, 1], [2,1]];
+
     console.log("you see, a shape")
 }
 
 function initiate_Shape() {
+    context.fillStyle = "red";
+    context.fillRect(0, 0, tile_size, tile_size); 
+    context.strokeStyle = "black";
+    context.strokeRect(0, 0, tile_size, tile_size);
+
     console.log("here comes #1") // how to initiate the shape, random or by order. or sets of order
 }
 
@@ -61,35 +76,18 @@ function clearrow() {
     console.log("blast'em")
 }
 
-function control(e) { //player controls one shape, closest to the floor
-    var key = e.keyCode;
-
-    if ((key == LEFT_KEY) && (!rightDirection)) {
-
-        leftDirection = true;
-        upDirection = false;
-        downDirection = false;
-    }
-
-    if ((key == RIGHT_KEY) && (!leftDirection)) {
-
-        rightDirection = true;
-        upDirection = false;
-        downDirection = false;
-    }
-
-    if ((key == UP_KEY) && (!downDirection)) {
-
-        upDirection = true;
-        rightDirection = false;
-        leftDirection = false;
-    }
-
-    if ((key == DOWN_KEY) && (!upDirection)) {
-
-        downDirection = true;
-        rightDirection = false;
-        leftDirection = false;
+onkeydown=function control(e) { //player controls one shape, closest to the floor
+    if(e.keyCode == 37){
+        p.moveLeft();
+        dropStart = Date.now();
+    }else if(e.keyCode == 38){
+        p.rotate();
+        dropStart = Date.now();
+    }else if(e.keyCode == 39){
+        p.moveRight();
+        dropStart = Date.now();
+    }else if(e.keyCode == 40){
+        p.moveDown();
     }
 }
 
