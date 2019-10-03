@@ -3,11 +3,15 @@ var context;
 var score;
 var horizontal_max; //height of the game area
 var vertical_max; //width of thee game area
+var leftwall;
+var rightwall;
+var floor;
 var tile; //size of each tile within the game area
 var level; //msy be game can progress based on game level, speed shape etc
 var shapes = new Array(); //put shapes in
 var currentShape; //to put shapes in a context
-var nextShape; //to define upcoming shspe
+var speed;
+var nextShape; //to define upcoming shape
 var colors = ['black', 'yellow', 'red', 'cyan']; //4 colors, can pick by random function
 var L=[0,0,1,  //started with 2 shapes to see how it will look, 3x3, could be small, can try 4x4
        0,0,1,
@@ -50,8 +54,11 @@ function game() {
 
 }
 
-//function buildshapes() { // design shapes here, 4,5, random? NOT SURE If I NEED This One.
-    
+function buildshapes() { // design shapes here, 4,5, random? NOT SURE If I NEED This One.
+for (let i=0;i<=2;i++){
+        console.log(shapes[i]);
+}
+}
   // index=Math.floor((Math.random()*shapes.length));
     //return [...shapes[ index]];
 
@@ -59,9 +66,15 @@ function game() {
 //}
 
 function initiate_Shape() { //first shape
-   
-    context.fillStyle = "red";
-    context.fillRect(0, 0, tile_size, tile_size); 
+    clearrow(context);
+    context.fillStyle = "cyan";
+    context.fillRect(0, 0, tile_size, tile_size);//should use beginpath()?
+    context.fillStyle = "cyan"; 
+    context.fillRect(0, 20, tile_size, tile_size); 
+    context.fillStyle = "cyan";
+    context.fillRect(0, 40, tile_size, tile_size);
+    context.fillStyle = "cyan"; 
+    context.fillRect(0, 60, tile_size, tile_size); 
     //ontext.strokeStyle = "black";
     //context.strokeRect(0, 0, tile_size, tile_size);
 
@@ -98,16 +111,16 @@ function clearrow() {
 }
 
 onkeydown=function control(e) { //player controls one shape, closest to the floor
-    if(e.keyCode == 37){
+    if(e.keyCode == 37&&x>leftwall){//check max x and y values, bounce effect?
         p.moveLeft();
-        dropStart = Date.now();
-    }else if(e.keyCode == 38){
+        
+    }else if(e.keyCode == 38&&y>floor){
         p.rotate();
-        dropStart = Date.now();
-    }else if(e.keyCode == 39){
+        
+    }else if(e.keyCode == 39<rightwall){
         p.moveRight();
-        dropStart = Date.now();
-    }else if(e.keyCode == 40){
+        
+    }else if(e.keyCode == 40&&y>floor){
         p.moveDown();
     }
 }
